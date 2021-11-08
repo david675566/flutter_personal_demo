@@ -17,9 +17,19 @@ class HomePage extends GetView<HomeController> {
           appBar: AppBar(
             title: const Text("My Personal Demo"),
           ),
-          body: const SafeArea(
+          body: SafeArea(
             child: Center(
-              child: Text("This is my personal demo home page!"),
+              child: ListView(
+                children: [
+                  ListTile(
+                    title: Text(
+                      "不可以色色",
+                      style: Theme.of(context).primaryTextTheme.bodyText1,
+                    ),
+                    onTap: () => Get.toNamed("/no_horny"),
+                  ),
+                ],
+              ),
             ),
           ),
         );
