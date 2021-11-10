@@ -9,7 +9,19 @@ class NoHornyPage extends GetView<NoHornyController> {
 
   @override
   Widget build(BuildContext context) {
-    const _snackBar = SnackBar(content: Text("不可以色色"));
+    const _snackBarSuccess = SnackBar(content: Text("不可以色色"));
+    const _snackBarFailed = SnackBar(content: Text("使用者帳號/密碼錯誤!"));
+    final _snackBarBonk = SnackBar(
+      duration: const Duration(milliseconds: 1200),
+      content: const AspectRatio(
+        aspectRatio: 1.2,
+        child: Center(
+          child: Text("Bonk!", style: TextStyle(fontSize: 31)),
+        ),
+      ),
+      behavior: SnackBarBehavior.floating,
+      margin: EdgeInsets.only(left: 69, right: 69, bottom: Get.height / 3),
+    );
 
     return GetBuilder(
       init: NoHornyController(),
@@ -60,9 +72,19 @@ class NoHornyPage extends GetView<NoHornyController> {
                             "登入",
                           ),
                           onPressed: () {
-                            final sucess = this.controller.validateUser();
-                            if (sucess) {
-                              ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            final _success = this.controller.validateUser();
+                            if (_success) {
+                              ScaffoldMessenger.of(context).showSnackBar(_snackBarSuccess);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(_snackBarFailed);
+                            }
+                          },
+                          onLongPress: () {
+                            final _success = this.controller.validateUser();
+                            if (_success) {
+                              ScaffoldMessenger.of(context).clearSnackBars();
+                              ScaffoldMessenger.of(context).showSnackBar(_snackBarBonk);
                             }
                           },
                         ),
